@@ -1,4 +1,4 @@
-package com.unibave.transporte.Entity;
+package com.unibave.transporte.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
