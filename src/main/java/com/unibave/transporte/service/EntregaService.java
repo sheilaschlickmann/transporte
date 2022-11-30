@@ -5,6 +5,8 @@ import com.unibave.transporte.repository.EntregaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.Positive;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,4 +26,10 @@ public class EntregaService {
     public Entregas save(Entregas entregas) {
         return entregaRepository.save(entregas);
     }
+
+    public List<Entregas> findAll() {
+        return entregaRepository.findAll();
+    }
+
+
 }
