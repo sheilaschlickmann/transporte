@@ -3,12 +3,10 @@ package com.unibave.transporte.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
-import javax.validation.constraints.NegativeOrZero;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 
@@ -17,6 +15,7 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true, value = {"hibernateLazyInitializer", "handler"})
 @ToString
 @Data
+@Validated
 public class Frete implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,12 +32,12 @@ public class Frete implements Serializable {
 
     @Column(name = "valor_km")
     @NotNull(message = "O valor do km percorrido é obrigatório!")
-    @NegativeOrZero(message = "O valor não pode ser do km percorrido não pode ser zero ou negativo!")
+    @Positive(message = "O valor não pode ser do km percorrido não pode ser zero ou negativo!")
     private double valor_km;
 
     @Column(name = "taxa_administracao")
     @NotNull(message = "O valor da Taxa de Administração é obrigatório!")
-    @NegativeOrZero(message = "O valor não pode ser da Taxa de Administração não pode ser zero ou negativo!")
+    @Positive(message = "O valor não pode ser da Taxa de Administração não pode ser zero ou negativo!")
     private double taxa_administracao;
 
 }

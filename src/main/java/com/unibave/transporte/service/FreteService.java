@@ -1,6 +1,7 @@
 package com.unibave.transporte.service;
 
 import com.unibave.transporte.entity.Frete;
+import com.unibave.transporte.exception.RegistroNaoEncontradoException;
 import com.unibave.transporte.repository.FreteRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,12 @@ public class FreteService {
         this.freteRepository = freteRepository;
     }
 
-    public Optional<Frete> findById(Integer id) {
-        return freteRepository.findById(id);
+    public Frete findById(Integer id) {
+        Optional<Frete> registroEncontrado = freteRepository.findById(id);
+        if (registroEncontrado.isPresent()) {
+            return registroEncontrado.get();
+        }
+        throw new RegistroNaoEncontradoException("Não foi encontrado nenhuma tabela frete com id: "+id);
     }
 
     @Transactional
@@ -28,11 +33,25 @@ public class FreteService {
 
     @Transactional
     public Frete delete(Integer id) {
-        Frete fretes = freteRepository.findById(id).get();
-        freteRepository.deleteById(id);
-        return fretes;
+        Frete bandeiraSalva = freteRepository.findById(id).get();
+        this.freteRepository.deleteById(id);
+        return bandeiraSalva;
     }
 
+    public Frete searchByDescrip(String description){
+        Frete registroEncontrado = freteRepository.searchByDescrip(description);
+        System.out.println(registroEncontrado);
+        if (registroEncontrado != null) {
+            return registroEncontrado;
+        }
+        throw new RegistroNaoEncontradoException("Não foi encontrada nenhuma tabela frete com a descrição: '" + description + "'");
+    }
+    private void checarExistenciaNaBaseDo(Integer idDaBandeira) {
+        boolean isExiste = freteRepository.existsById(idDaBandeira);
+        if (!isExiste) {
+            throw new RegistroNaoEncontradoException("Não foi encontrada frete com o ID informado!");
+        }
+    }
 
 }
 
