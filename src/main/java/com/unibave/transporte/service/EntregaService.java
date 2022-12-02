@@ -31,5 +31,9 @@ public class EntregaService {
         return entregaRepository.findAll();
     }
 
+    public boolean existsByDsCarga(String ds_carga) {
+        return entregaRepository.existsByDsCarga(ds_carga);
+    }
+
 
 }
