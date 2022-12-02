@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class Response {
-    @JsonProperty("results")
-    private Result [] result;
+public class ResponseDistance {
 
-
-
+    @JsonProperty("rows")
+    private Rows [] rows;
 }
