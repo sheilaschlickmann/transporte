@@ -21,25 +21,25 @@ public class Entregas {
 
     @Column(name = "ds_carga")
     @NotEmpty(message = "A descrição da Carga é obrigatória")
-    private String ds_carga;
+    private String dsCarga;
 
     @Column(name = "cep_origem")
     @NotEmpty(message = "O CEP de origem é obrigatório")
-    private String cep_origem;
+    private String cepOrigem;
 
 
     @Column(name = "cep_destino")
     @NotEmpty(message = "O CEP de destino é obrigatório")
-    private String cep_destino;
+    private String cepDestino;
 
     @Column(name = "id_entregador")
     @NotEmpty(message = "O id do entregador é obrigatório")
-    private Integer id_entregador;
+    private Integer idEntregador;
 
 
     @Column(name = "id_tabela_frete")
     @NotEmpty(message = "O id da tabela de frete é obrigatório")
-    private Integer id_tabela_frete;
+    private Integer idTabelaFrete;
 
 
 
