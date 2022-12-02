@@ -51,7 +51,7 @@ public class FreteController {
 
     @GetMapping("/descricao/{description}")
     public ResponseEntity<?> searchByDescrip(@PathVariable(value = "description") String description){
-        return ResponseEntity.ok(mapConverter.toJsonMap(freteService.searchByDescrip(description)));
+        return ResponseEntity.ok(mapConverter.toJsonList(freteService.searchByDescrip(description)));
     }
 
     @DeleteMapping("/{id}")

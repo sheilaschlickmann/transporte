@@ -6,6 +6,7 @@ import com.unibave.transporte.repository.FreteRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,19 +39,12 @@ public class FreteService {
         return bandeiraSalva;
     }
 
-    public Frete searchByDescrip(String description){
-        Frete registroEncontrado = freteRepository.searchByDescrip(description);
-        System.out.println(registroEncontrado);
-        if (registroEncontrado != null) {
+    public List<Frete> searchByDescrip(String description){
+        List<Frete> registroEncontrado = freteRepository.searchByDescrip(description);
+        if (!registroEncontrado.isEmpty()) {
             return registroEncontrado;
         }
         throw new RegistroNaoEncontradoException("Não foi encontrada nenhuma tabela frete com a descrição: '" + description + "'");
-    }
-    private void checarExistenciaNaBaseDo(Integer idDaBandeira) {
-        boolean isExiste = freteRepository.existsById(idDaBandeira);
-        if (!isExiste) {
-            throw new RegistroNaoEncontradoException("Não foi encontrada frete com o ID informado!");
-        }
     }
 
 }

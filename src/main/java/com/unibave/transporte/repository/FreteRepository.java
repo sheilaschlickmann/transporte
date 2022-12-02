@@ -5,12 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface FreteRepository extends JpaRepository<Frete, Integer> {
 
     @Query("SELECT f "
             + "FROM Frete f "
             + "WHERE f.desc_short like :description ")
-    public Frete searchByDescrip(String description);
+    public List<Frete> searchByDescrip(String description);
 
 }
