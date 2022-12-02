@@ -30,4 +30,6 @@ public class Entregador {
     @Size(max = 100, message = "O tamanho do nome da bandeira não pode passar de 100 caracteres")
     private String nome;
 
+
+
 }
