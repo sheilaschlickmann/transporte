@@ -34,9 +34,9 @@ public class FreteService {
 
     @Transactional
     public Frete delete(Integer id) {
-        Frete bandeiraSalva = freteRepository.findById(id).get();
+        Frete freteSalva = freteRepository.findById(id).get();
         this.freteRepository.deleteById(id);
-        return bandeiraSalva;
+        return freteSalva;
     }
 
     public List<Frete> searchByDescrip(String description){
@@ -47,6 +47,9 @@ public class FreteService {
         throw new RegistroNaoEncontradoException("Não foi encontrada nenhuma tabela frete com a descrição: '" + description + "'");
     }
 
+    public boolean existsBydescShort(String description) {
+        return freteRepository.existsBydescShort(description);
+    }
 }
 
 

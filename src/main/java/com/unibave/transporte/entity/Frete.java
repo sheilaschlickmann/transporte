@@ -28,16 +28,16 @@ public class Frete implements Serializable {
     @Column(name = "desc_short")
     @NotEmpty(message = "O Descrição da tabela é obrigatório!")
     @Size(max = 50, message = "O tamanho do nome da bandeira não pode passar de 50 caracteres!")
-    private String desc_short;
+    private String descShort;
 
     @Column(name = "valor_km")
     @NotNull(message = "O valor do km percorrido é obrigatório!")
     @Positive(message = "O valor não pode ser do km percorrido não pode ser zero ou negativo!")
-    private double valor_km;
+    private double valorKm;
 
     @Column(name = "taxa_administracao")
     @NotNull(message = "O valor da Taxa de Administração é obrigatório!")
     @Positive(message = "O valor não pode ser da Taxa de Administração não pode ser zero ou negativo!")
-    private double taxa_administracao;
+    private double taxaAdministracao;
 
 }

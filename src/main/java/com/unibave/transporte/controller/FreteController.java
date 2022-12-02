@@ -11,10 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
-import java.net.URI;
 import java.util.Map;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/tabelas")
@@ -34,12 +32,22 @@ public class FreteController {
     @PostMapping
     public ResponseEntity<?> saveFrete(@RequestBody Map<String, Object> freteMap) {
         if (freteMap != null) {
-            Frete freteConvertida = mapper.convertValue(freteMap, Frete.class);
-            Frete freteSalva = freteService.save(freteConvertida);
+            Frete freteConvertido = mapper.convertValue(freteMap, Frete.class);
+
+            if (freteService.existsBydescShort(freteConvertido.getDescShort())) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("CONFLITO! Já existe tabela com esssa descrição!");
+            }
+
+            if (freteConvertido.getTaxaAdministracao() > freteConvertido.getValorKm() * 2) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O valor da taxa Administrativa não pode ser o dobro do valor do KM!");
+            }
+
+            Frete freteSalva = freteService.save(freteConvertido);
             return  ResponseEntity.status(HttpStatus.OK).body("Tabela criada com sucesso! ID: "+freteSalva.getId()+
-                                                              ", Descrição: "+freteSalva.getDesc_short()+
-                                                              ", Valor do KM: "+freteSalva.getValor_km()+
-                                                              ", Taxa de Administração: "+freteSalva.getTaxa_administracao());
+                                                              ", Descrição: "+freteSalva.getDescShort()+
+                                                              ", Valor do KM: "+freteSalva.getValorKm()+
+                                                              ", Taxa de Administração: "+freteSalva.getTaxaAdministracao());
+
         }
         throw new ConverterException("Não foi possivel criar uma tabela de frete!");
     }
