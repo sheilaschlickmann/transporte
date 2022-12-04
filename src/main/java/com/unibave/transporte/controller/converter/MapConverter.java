@@ -52,7 +52,7 @@ public class MapConverter implements Serializable{
 			
 			return jsonObj.toMap();
 
-		}catch (Exception jpe) {
+		}catch (JsonProcessingException jpe) {
 			jpe.printStackTrace();
 			return null;
 		}

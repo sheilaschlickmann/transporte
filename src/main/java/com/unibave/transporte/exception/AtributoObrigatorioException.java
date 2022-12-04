@@ -7,5 +7,5 @@ public class AtributoObrigatorioException extends RuntimeException {
 	public AtributoObrigatorioException(String mensagem) {
 		super(mensagem);
 	}
-	
+
 }
