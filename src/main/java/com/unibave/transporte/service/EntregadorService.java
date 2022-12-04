@@ -1,14 +1,32 @@
 package com.unibave.transporte.service;
 
 import com.unibave.transporte.entity.Entregador;
+import com.unibave.transporte.entity.Entregas;
+import com.unibave.transporte.repository.EntregadorRepository;
+import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Positive;
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
-public interface EntregadorService {
-    Entregador buscarPor(
-            @Positive(message = "Não pode ser menos que 0!")
-            Integer id);
+@Service
+public class EntregadorService {
 
-    List<Entregador> listarTodas();
+    final EntregadorRepository entregadorRepository;
+
+    public EntregadorService(EntregadorRepository entregadorRepository) {
+        this.entregadorRepository = entregadorRepository;
+    }
+    public Optional<Entregador> findById(Integer id) {
+        return entregadorRepository.findById(id);
+    }
+
+    @Transactional
+    public Entregador save(Entregador entregador) {
+        return entregadorRepository.save(entregador);
+    }
+
+    public List<Entregador> findAll() {
+        return entregadorRepository.findAll();
+    }
 }
