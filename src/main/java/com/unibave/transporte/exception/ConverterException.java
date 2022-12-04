@@ -1,10 +1,11 @@
 package com.unibave.transporte.exception;
 
-public class ConverterException extends RuntimeException {
-    private static final long serialVersionUID = 1L;
+public class ConverterException extends RuntimeException{
 
-    public ConverterException(String mensagem) {
-        super(mensagem);
-    }
+	private static final long serialVersionUID = 1L;
+	
+	public ConverterException(String mensagem) {
+		super(mensagem);
+	}
 
 }
