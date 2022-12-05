@@ -12,6 +12,7 @@ import com.unibave.transporte.service.EntregadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -35,6 +36,7 @@ public class EntregadorController  {
         this.entregadorService = entregadorService;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     @Transactional
     public ResponseEntity<?> inserir(@RequestBody Map<String, Object> entregador){
@@ -45,6 +47,7 @@ public class EntregadorController  {
         // throw new ConverterException("A Entrega enviada para inserção não existe!");
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable("id") Integer id) {
         Optional<?> entregadorOptional =  entregadorService.findById(id);
@@ -54,6 +57,7 @@ public class EntregadorController  {
         return ResponseEntity.ok(mapConverter.toJsonMap(entregadorService.findById(id)));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/entregador/{id_entregador}")
     public ResponseEntity<?> buscarPorIdEntregador(@PathVariable("id_entregador") Integer id_entregador) {
         Optional<?> entregadorOptional =  entregadorService.findById(id_entregador);
@@ -63,6 +67,7 @@ public class EntregadorController  {
         return ResponseEntity.ok(mapConverter.toJsonMap(entregadorService.findById(id_entregador)));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping
     public ResponseEntity<?> listarTodas() {
         return ResponseEntity.ok(mapConverter.toJsonList(entregadorService.findAll()));

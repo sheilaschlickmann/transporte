@@ -14,6 +14,7 @@ import com.unibave.transporte.service.FreteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -47,7 +48,7 @@ public class EntregaController {
     }
 
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     @Transactional
     public ResponseEntity<?> inserir(@RequestBody Map<String, Object> entregas/*,@RequestParam String address_origin, String address_destiny, Integer id_frete, Integer id_entregador*/){
@@ -97,6 +98,7 @@ public class EntregaController {
             return  ResponseEntity.created(URI.create("/entregas/id/" + entregaSalva.getId())).build();
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable("id") Integer id) {
         Optional<?> entregasOptional =  entregaService.findById(id);
@@ -106,6 +108,7 @@ public class EntregaController {
         return ResponseEntity.ok(mapConverter.toJsonMap(entregaService.findById(id)));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/entregador/{id_entregador}")
     public ResponseEntity<?> buscarPorIdEntregador(@PathVariable("id_entregador") Integer id_entregador) {
         Optional<?> entregadorOptional =  entregadorService.findById(id_entregador);
@@ -115,6 +118,7 @@ public class EntregaController {
         return ResponseEntity.ok(mapConverter.toJsonMap(entregadorService.findById(id_entregador)));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping
     public ResponseEntity<?> listarTodas() {
         return ResponseEntity.ok(mapConverter.toJsonList(entregaService.findAll()));

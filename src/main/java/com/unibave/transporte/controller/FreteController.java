@@ -8,6 +8,7 @@ import com.unibave.transporte.service.FreteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -29,6 +30,7 @@ public class FreteController {
         this.freteService = freteService;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<?> saveFrete(@RequestBody Map<String, Object> freteMap) {
         if (freteMap != null) {
@@ -52,16 +54,19 @@ public class FreteController {
         throw new ConverterException("Não foi possivel criar uma tabela de frete!");
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getFrete(@PathVariable(value = "id") Integer id) {
         return ResponseEntity.ok(mapConverter.toJsonMap(freteService.findById(id)));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/descricao/{description}")
     public ResponseEntity<?> searchByDescrip(@PathVariable(value = "description") String description){
         return ResponseEntity.ok(mapConverter.toJsonList(freteService.searchByDescrip(description)));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> delete(@PathVariable(value = "id") Integer id){
