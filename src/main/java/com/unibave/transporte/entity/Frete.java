@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Entity
@@ -39,5 +40,10 @@ public class Frete implements Serializable {
     @NotNull(message = "O valor da Taxa de Administração é obrigatório!")
     @Positive(message = "O valor não pode ser da Taxa de Administração não pode ser zero ou negativo!")
     private double taxaAdministracao;
+
+
+
+    /*@OneToMany
+    private List<Entregas> entregas;*/
 
 }
