@@ -58,16 +58,6 @@ public class EntregadorController  {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    @GetMapping("/entregador/{id_entregador}")
-    public ResponseEntity<?> buscarPorIdEntregador(@PathVariable("id_entregador") Integer id_entregador) {
-        Optional<?> entregadorOptional =  entregadorService.findById(id_entregador);
-        if (!entregadorOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Entregador não cadastrado!");
-        }
-        return ResponseEntity.ok(mapConverter.toJsonMap(entregadorService.findById(id_entregador)));
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping
     public ResponseEntity<?> listarTodas() {
         return ResponseEntity.ok(mapConverter.toJsonList(entregadorService.findAll()));

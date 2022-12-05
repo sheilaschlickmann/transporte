@@ -98,6 +98,16 @@ public class EntregaController {
             return  ResponseEntity.created(URI.create("/entregas/id/" + entregaSalva.getId())).build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> atualizar(@RequestBody Map<String, Object> entregas) {
+        Entregas entregaConvertida = mapper.convertValue(entregas, Entregas.class);
+        entregaConvertida.setStatus(Status.valueOf(entregaConvertida.getStatus().getDescricao()));
+        Entregas entregaSalva = entregaService.save(entregaConvertida);
+        return  ResponseEntity.created(URI.create("/entregas/id/" + entregaSalva.getId())).build();
+    }
+
+
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable("id") Integer id) {

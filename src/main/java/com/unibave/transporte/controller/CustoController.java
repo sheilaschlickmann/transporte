@@ -1,9 +1,6 @@
 package com.unibave.transporte.controller;
 
-import com.unibave.transporte.dtos.Entregas;
-import com.unibave.transporte.dtos.Location;
-import com.unibave.transporte.dtos.Response;
-import com.unibave.transporte.dtos.ResponseDistance;
+import com.unibave.transporte.dtos.*;
 import com.unibave.transporte.entity.Frete;
 import com.unibave.transporte.service.EntregaService;
 import com.unibave.transporte.service.FreteService;
@@ -59,7 +56,7 @@ public class CustoController {
 
                 double valor_frete = (value * tabela_Frete.getValorKm()) + tabela_Frete.getTaxaAdministracao();
 
-                String rua_origem = responseOrigin.getBody().getResult()[0].getAddress_components()[1].getLong_name();
+                /*String rua_origem = responseOrigin.getBody().getResult()[0].getAddress_components()[1].getLong_name();
 
                 String bairro_origem = responseOrigin.getBody().getResult()[0].getAddress_components()[2].getLong_name();
 
@@ -67,18 +64,66 @@ public class CustoController {
 
                 String estado_origem = responseOrigin.getBody().getResult()[0].getAddress_components()[4].getShort_name();
 
-                String pais_origem = responseOrigin.getBody().getResult()[0].getAddress_components()[5].getShort_name();
+                String pais_origem = responseOrigin.getBody().getResult()[0].getAddress_components()[5].getShort_name();*/
+
+                String rua_origem = null;
+                String bairro_origem = null;
+                String cidade_origem = null;
+                String estado_origem = null;
+                String pais_origem = null;
+
+                AddressComponents type_origem[] =  responseOrigin.getBody().getResult()[0].getAddress_components();
+
+                for (AddressComponents adrressOrigem : type_origem) {
+                        if (adrressOrigem.getTypes()[0].contains("route")){
+                                rua_origem = adrressOrigem.getLong_name();
+                        } else if (adrressOrigem.getTypes()[0].contains("political")) {
+                                bairro_origem = adrressOrigem.getLong_name();
+                        } else if (adrressOrigem.getTypes()[0].contains("administrative_area_level_2")) {
+                                cidade_origem = adrressOrigem.getLong_name();
+                        } else if (adrressOrigem.getTypes()[0].contains("administrative_area_level_1")) {
+                                estado_origem = adrressOrigem.getShort_name();
+                        } else if (adrressOrigem.getTypes()[0].contains("country")) {
+                                pais_origem = adrressOrigem.getShort_name();
+                        }
+                }
 
 
-                String rua_destino = responseDestiny.getBody().getResult()[0].getAddress_components()[1].getLong_name();
+                //String rua_destino = responseDestiny.getBody().getResult()[0].getAddress_components()[1].getLong_name();
 
-                String bairro_destino = responseDestiny.getBody().getResult()[0].getAddress_components()[2].getLong_name();
+                String rua_destino = null;
 
-                String cidade_destino = responseDestiny.getBody().getResult()[0].getAddress_components()[3].getLong_name();
+                String bairro_destino = null;
 
-                String estado_destino = responseDestiny.getBody().getResult()[0].getAddress_components()[4].getShort_name();
+                String cidade_destino = null;
 
-                String pais_destino = responseDestiny.getBody().getResult()[0].getAddress_components()[5].getShort_name();
+                String estado_destino = null;
+
+                String pais_destino = null;
+
+                //String bairro_destino = responseDestiny.getBody().getResult()[0].getAddress_components()[2].getLong_name();
+
+                //String cidade_destino = responseDestiny.getBody().getResult()[0].getAddress_components()[3].getLong_name();
+
+                ///String estado_destino = responseDestiny.getBody().getResult()[0].getAddress_components()[4].getShort_name();
+
+                //String pais_destino = responseDestiny.getBody().getResult()[0].getAddress_components()[5].getShort_name();
+
+                AddressComponents type_destino[] =  responseDestiny.getBody().getResult()[0].getAddress_components();
+
+                for (AddressComponents adrressDestino : type_destino) {
+                        if (adrressDestino.getTypes()[0].contains("route")){
+                                 rua_destino = adrressDestino.getLong_name();
+                        } else if (adrressDestino.getTypes()[0].contains("political")) {
+                                bairro_destino = adrressDestino.getLong_name();
+                        } else if (adrressDestino.getTypes()[0].contains("administrative_area_level_2")) {
+                                cidade_destino = adrressDestino.getLong_name();
+                        } else if (adrressDestino.getTypes()[0].contains("administrative_area_level_1")) {
+                                estado_destino = adrressDestino.getShort_name();
+                        } else if (adrressDestino.getTypes()[0].contains("country")) {
+                                pais_destino = adrressDestino.getShort_name();
+                        }
+                }
 
                 Entregas entregas = new Entregas();
 

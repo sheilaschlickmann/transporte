@@ -12,7 +12,7 @@ public interface FreteRepository extends JpaRepository<Frete, Integer> {
 
     @Query("SELECT f "
             + "FROM Frete f "
-            + "WHERE f.descShort like :description ")
+            + "WHERE f.descShort like %:description% ")
     public List<Frete> searchByDescrip(String description);
 
     public boolean existsBydescShort(String description);

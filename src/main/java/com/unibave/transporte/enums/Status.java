@@ -2,6 +2,7 @@ package com.unibave.transporte.enums;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public enum Status {

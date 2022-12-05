@@ -2,21 +2,25 @@ package com.unibave.transporte.entity;
 
 import com.unibave.transporte.enums.Status;
 import lombok.Data;
+import org.springframework.validation.annotation.Validated;
 
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 
 
 @Data
 @Entity
 @Table(name = "entregas")
+@Validated
 public class Entregas {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "id")
+    @Positive(message = "O valor do id não pode ser zero ou negativo!")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
