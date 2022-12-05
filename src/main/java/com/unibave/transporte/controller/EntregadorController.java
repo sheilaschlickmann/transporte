@@ -73,6 +73,4 @@ public class EntregadorController  {
         return ResponseEntity.ok(mapConverter.toJsonList(entregadorService.findAll()));
     }
 
-
-
 }
