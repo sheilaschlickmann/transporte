@@ -8,6 +8,7 @@ import com.unibave.transporte.entity.Frete;
 import com.unibave.transporte.service.EntregaService;
 import com.unibave.transporte.service.FreteService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,7 @@ public class CustoController {
                 this.freteService = freteService;
         }
 
+        @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
         @GetMapping
         public Entregas getGeoCode(@RequestParam String address_origin, String address_destiny, Integer id_frete) {
                 ResponseEntity<Response> responseOrigin = new RestTemplate().getForEntity(BASE_URI + "/geocode/json?address=" + address_origin + "&key=" + API_KEY,
