@@ -4,6 +4,9 @@ import com.unibave.transporte.entity.Entregador;
 import com.unibave.transporte.entity.Entregas;
 import com.unibave.transporte.repository.EntregadorRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
 
 import javax.transaction.Transactional;
 import java.util.List;
